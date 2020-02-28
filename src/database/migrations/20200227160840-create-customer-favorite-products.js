@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("customer_favorite_products", {
+    return queryInterface.createTable('customer_favorite_products', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,10 +11,10 @@ module.exports = {
       },
       customer_id: {
         type: Sequelize.INTEGER,
-        references: { model: "customers", key: "id" },
+        references: { model: 'customers', key: 'id' },
         allowNull: false,
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       product_id: {
         type: Sequelize.INTEGER,
@@ -32,6 +32,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("users");
+    return queryInterface.dropTable('customer_favorite_products');
   }
 };
