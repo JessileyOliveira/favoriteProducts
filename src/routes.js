@@ -2,8 +2,10 @@ const { Router } = require('express');
 
 const routes = new Router();
 
-routes.get('/', async (req, res) => {
-  return res.json({ message: 'Hello World!!!' });
-});
+const CustomerController = require('./app/controllers/CustomerController');
+const AuthenticateController = require('./app/controllers/AuthenticateController');
+
+routes.post('/customers', CustomerController.store);
+routes.post('/authenticate', AuthenticateController.store);
 
 module.exports = routes;
