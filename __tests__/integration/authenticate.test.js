@@ -15,7 +15,7 @@ describe('Authenticate tests', () => {
     expect(response.body).toHaveProperty('token');
   });
 
-  it('should return status 404 when invited invalid email', async () => {
+  it('should return status 404 when sent invalid email', async () => {
     const response = await request(app)
       .post('/authenticate')
       .send({ email: 'EmailNotRegistred@notRegistred.com' });
@@ -23,7 +23,7 @@ describe('Authenticate tests', () => {
     expect(response.status).toBe(404);
   });
 
-  it('should return status 404 when invited empty email', async () => {
+  it('should return status 404 when sent empty email', async () => {
     const response = await request(app)
       .post('/authenticate')
       .send({});

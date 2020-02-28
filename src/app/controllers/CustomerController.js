@@ -1,9 +1,29 @@
 const Customer = require('../models/Customer');
 
 class CustomerController {
+  async index(req, res) {
+    const { id } = req.params;
+
+    if (!Number.isInteger(parseInt(id))) {
+      return res
+        .status(400)
+        .json({ error: true, message: 'Sent ID is invalid!' });
+    }
+
+    const customer = await Customer.findByPk(id);
+
+    if (!customer) {
+      return res
+        .status(404)
+        .json({ error: true, message: 'Customer not found!' });
+    }
+
+    return res.status(200).json(customer);
+  }
+
   async store(req, res) {
+    const { email } = req.body;
     try {
-      const { email, name } = req.body;
       const checkEmailExist = await Customer.findOne({ where: { email } });
 
       if (checkEmailExist) {
@@ -16,11 +36,9 @@ class CustomerController {
 
       return res.status(201).json(customer);
     } catch (e) {
-      if (!email || !name) {
-        return res
-          .status(400)
-          .json({ error: true, message: 'Name and email are required' });
-      }
+      return res
+        .status(400)
+        .json({ error: true, message: 'Error registering customer' });
     }
   }
 }
