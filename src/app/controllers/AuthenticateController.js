@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const Customer = require('../models/Customer');
 
+const authConfig = require('../../config/auth');
+
 class AuthenticateController {
   async store(req, res) {
     const { email } = req.body;
@@ -24,8 +26,8 @@ class AuthenticateController {
     const { id } = customer;
 
     return res.status(200).json({
-      token: jwt.sign({ id, email }, '37bd1ee46cb74652c48a54f43c0e0c8c', {
-        expiresIn: '30d',
+      token: jwt.sign({ id, email }, authConfig.secret, {
+        expiresIn: authConfig.expiresIn,
       }),
     });
   }
