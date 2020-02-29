@@ -39,7 +39,6 @@ describe('Favorite products tests', () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty('id');
   });
-
   it('should return error when product id invalid (store)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
@@ -53,7 +52,6 @@ describe('Favorite products tests', () => {
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Product not found!');
   });
-
   it('should return error when customer id invalid (store)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
@@ -67,7 +65,6 @@ describe('Favorite products tests', () => {
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Customer not found!');
   });
-
   it('should return error when product id already exists customers favorite list (store)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
@@ -86,5 +83,43 @@ describe('Favorite products tests', () => {
     expect(response.body.message).toBe(
       'The product already exists on the customers favorite list!'
     );
+  });
+
+  it('should be able remove a favorite product (destroy)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+
+    const response = await request(app)
+      .delete(`/customers/${customer.id}/favoriteproduct/${productId}`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    expect(response.status).toBe(200);
+  });
+  it('should return error when product id invalid (destroy)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+
+    const response = await request(app)
+      .delete(`/customers/${customer.id}/favoriteproduct/-invalidValue-`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toBe('Product not found!');
+  });
+  it('should return error when customer id invalid (destroy)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    await customer.destroy();
+    const response = await request(app)
+      .delete(`/customers/${customer.id}/favoriteproduct/${productId}`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toBe('Customer not found!');
   });
 });

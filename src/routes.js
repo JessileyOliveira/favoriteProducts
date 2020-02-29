@@ -31,4 +31,11 @@ routes.post(
   CustomerFavoriteProductsController.store
 );
 
+routes.delete(
+  '/customers/:customer_id/favoriteproduct/:product_id',
+  getCustomer,
+  getProduct,
+  CustomerFavoriteProductsController.destroy
+);
+
 module.exports = routes;
