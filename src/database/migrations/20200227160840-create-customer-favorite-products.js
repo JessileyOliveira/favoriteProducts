@@ -7,31 +7,31 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       customer_id: {
         type: Sequelize.INTEGER,
         references: { model: 'customers', key: 'id' },
         allowNull: false,
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
       },
       product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.UUID,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('customer_favorite_products');
-  }
+  },
 };

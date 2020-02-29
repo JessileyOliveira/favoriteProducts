@@ -150,8 +150,7 @@ describe('Customer tests', () => {
     expect(response.body).toHaveProperty('lastPage');
     expect(response.body).toHaveProperty('total');
   });
-
-  it('should return page 1 in case of not sended page query', async () => {
+  it('should return page 1 in case of not sended page query (index)', async () => {
     const response = await request(app)
       .get(`/customers`)
       .set('authorization', `Baerer ${token}`)
@@ -159,8 +158,7 @@ describe('Customer tests', () => {
     expect(response.status).toBe(200);
     expect(response.body.page).toBe(1);
   });
-
-  it('should return perPage 10 in case of not sended perPage query', async () => {
+  it('should return perPage 10 in case of not sended perPage query (index)', async () => {
     const response = await request(app)
       .get(`/customers`)
       .set('authorization', `Baerer ${token}`)
@@ -168,8 +166,7 @@ describe('Customer tests', () => {
     expect(response.status).toBe(200);
     expect(response.body.perPage).toBe(10);
   });
-
-  it('should be able return differents pages', async () => {
+  it('should be able return differents pages (index)', async () => {
     const response = await request(app)
       .get(`/customers?page=2`)
       .set('authorization', `Baerer ${token}`)
@@ -177,8 +174,7 @@ describe('Customer tests', () => {
     expect(response.status).toBe(200);
     expect(parseInt(response.body.page)).toBe(2);
   });
-
-  it('should be able return differents perPages', async () => {
+  it('should be able return differents perPages (index)', async () => {
     const response = await request(app)
       .get(`/customers?perPage=5`)
       .set('authorization', `Baerer ${token}`)
