@@ -1,9 +1,9 @@
 const Customer = require('../models/Customer');
 
 module.exports = async (req, res, next) => {
-  const id = req.requesterId;
+  const { customer_id } = req.params;
 
-  const customer = await Customer.findByPk(id);
+  const customer = await Customer.findByPk(customer_id);
 
   if (!customer) {
     return res

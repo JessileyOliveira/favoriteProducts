@@ -1,4 +1,5 @@
 const Customer = require('../models/Customer');
+const { Op } = require('sequelize');
 
 class CustomerController {
   async index(req, res) {
@@ -32,7 +33,9 @@ class CustomerController {
     const customer = req.customer;
     const { email } = req.body;
 
-    const checkEmailExist = await Customer.findOne({ where: { email } });
+    const checkEmailExist = await Customer.findOne({
+      where: { email, id: { [Op.not]: customer.id } },
+    });
 
     if (checkEmailExist) {
       return res.status(400).json({ error: true, message: 'Duplicated email' });

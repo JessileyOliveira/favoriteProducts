@@ -14,9 +14,7 @@ module.exports = async (req, res, next) => {
   const token = auth.split(' ')[1];
 
   try {
-    const decoded = await promisify(jwt.verify)(token, authConfig.secret);
-
-    req.requesterId = decoded.id;
+    await promisify(jwt.verify)(token, authConfig.secret);
 
     return next();
   } catch (e) {

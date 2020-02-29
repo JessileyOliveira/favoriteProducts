@@ -9,12 +9,16 @@ const auth = require('./app/middlewares/auth');
 const getCustomer = require('./app/middlewares/getCustomer');
 
 routes.post('/authenticate', AuthenticateController.store);
-routes.post('/customers', CustomerController.store);
 
 routes.use(auth);
 
-routes.get('/customers', getCustomer, CustomerController.index);
-routes.put('/customers', getCustomer, CustomerController.update);
-routes.delete('/customers', getCustomer, CustomerController.destroy);
+routes.post('/customers', CustomerController.store);
+routes.get('/customers/:customer_id', getCustomer, CustomerController.index);
+routes.put('/customers/:customer_id', getCustomer, CustomerController.update);
+routes.delete(
+  '/customers/:customer_id',
+  getCustomer,
+  CustomerController.destroy
+);
 
 module.exports = routes;

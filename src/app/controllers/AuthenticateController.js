@@ -1,35 +1,41 @@
 const jwt = require('jsonwebtoken');
-const Customer = require('../models/Customer');
 
 const authConfig = require('../../config/auth');
 
 class AuthenticateController {
   async store(req, res) {
-    const { email } = req.body;
+    const { username, password } = req.body;
 
-    if (!email) {
+    if (!username) {
       return res.status(400).json({
         error: true,
-        message: `Email not informed!`,
+        message: `Username not informed!`,
       });
     }
 
-    const customer = await Customer.findOne({ where: { email } });
-
-    if (!customer) {
-      return res.status(404).json({
+    if (!password) {
+      return res.status(400).json({
         error: true,
-        message: `Customer not exists with email ${email}!`,
+        message: `Password not informed!`,
       });
     }
 
-    const { id } = customer;
+    if (username === 'LuizaLabsUser' && password === 'LuizaLabsPassword') {
+      const token = jwt.sign(
+        {
+          username,
+          password,
+        },
+        authConfig.secret,
+        {
+          expiresIn: authConfig.expiresIn,
+        }
+      );
 
-    return res.status(200).json({
-      token: jwt.sign({ id }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn,
-      }),
-    });
+      return res.status(200).send({ token });
+    }
+
+    return res.status(404).send({ error: 'User not found!' });
   }
 }
 
