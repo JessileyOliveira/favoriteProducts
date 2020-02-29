@@ -6,7 +6,7 @@ const Customer = require('../../src/app/models/Customer');
 const authConfig = require('../../src/config/auth');
 
 describe('Customer tests', () => {
-  it('should add a new customer and return status 201', async () => {
+  it('should add a new customer and return status 201 (store)', async () => {
     const response = await request(app)
       .post('/customers')
       .send(generateFakeCustomer());
@@ -26,7 +26,7 @@ describe('Customer tests', () => {
     expect(response.body.message).toBe('Duplicated email');
   });
 
-  it('should return status 400 in case of error', async () => {
+  it('should return status 400 in case of error (store)', async () => {
     const response = await request(app)
       .post('/customers')
       .send({ name: 'teste' });
@@ -34,7 +34,7 @@ describe('Customer tests', () => {
     expect(response.status).toBe(400);
   });
 
-  it('should return a customer', async () => {
+  it('should return a customer (index)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
     const token = jwt.sign(
@@ -53,7 +53,7 @@ describe('Customer tests', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should return status 404 when customer was deleted', async () => {
+  it('should return status 404 when customer was deleted (index)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
     const token = jwt.sign(
@@ -72,7 +72,7 @@ describe('Customer tests', () => {
     expect(response.status).toBe(404);
   });
 
-  it('should update a customer', async () => {
+  it('should update a customer (update)', async () => {
     let fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
     const token = jwt.sign(
@@ -116,5 +116,65 @@ describe('Customer tests', () => {
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Duplicated email');
+  });
+
+  it('should return status 404 when customer was deleted (update)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const token = jwt.sign(
+      { id: customer.id, email: customer.email },
+      authConfig.secret,
+      {
+        expiresIn: authConfig.expiresIn,
+      }
+    );
+    await customer.destroy();
+    const response = await request(app)
+      .put(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send({ name: fakeCustomer.name, email: 'customer@email.com' });
+
+    expect(response.status).toBe(404);
+  });
+
+  it('should delete a customer (destroy)', async () => {
+    let fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const token = jwt.sign(
+      { id: customer.id, email: customer.email },
+      authConfig.secret,
+      {
+        expiresIn: authConfig.expiresIn,
+      }
+    );
+    const response = await request(app)
+      .delete(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    const customerAfterDestroy = await Customer.findOne({
+      where: { email: customer.email },
+    });
+    expect(response.status).toBe(200);
+    expect(customerAfterDestroy).toBeNull();
+  });
+
+  it('should return status 404 when customer was deleted (destroy)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const token = jwt.sign(
+      { id: customer.id, email: customer.email },
+      authConfig.secret,
+      {
+        expiresIn: authConfig.expiresIn,
+      }
+    );
+    await customer.destroy();
+    const response = await request(app)
+      .delete(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    expect(response.status).toBe(404);
   });
 });

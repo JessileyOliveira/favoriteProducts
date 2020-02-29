@@ -15,5 +15,6 @@ routes.use(auth);
 
 routes.get('/customers', getCustomer, CustomerController.index);
 routes.put('/customers', getCustomer, CustomerController.update);
+routes.delete('/customers', getCustomer, CustomerController.destroy);
 
 module.exports = routes;

@@ -42,6 +42,14 @@ class CustomerController {
 
     return res.status(200).json({ name, email });
   }
+
+  async destroy(req, res) {
+    const customer = req.customer;
+
+    await customer.destroy();
+
+    return res.status(200).send();
+  }
 }
 
 module.exports = new CustomerController();
