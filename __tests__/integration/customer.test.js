@@ -49,7 +49,7 @@ describe('Customer tests', () => {
     expect(response.body.message).toBe('Error registering customer');
   });
 
-  it('should return a customer (index)', async () => {
+  it('should return a customer (show)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
     const response = await request(app)
@@ -58,7 +58,7 @@ describe('Customer tests', () => {
       .send();
     expect(response.body).toHaveProperty('id');
   });
-  it('should return status 404 when customer not Exists (index)', async () => {
+  it('should return status 404 when customer not Exists (show)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
 
@@ -71,6 +71,7 @@ describe('Customer tests', () => {
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Customer not found!');
   });
+
   it('should update a customer (update)', async () => {
     let fakeCustomer = generateFakeCustomer();
     let newFakeCustomer = generateFakeCustomer();
@@ -111,6 +112,7 @@ describe('Customer tests', () => {
       .send(secondFakeCustomer);
     expect(response.status).toBe(404);
   });
+
   it('should delete a customer (destroy)', async () => {
     let fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
@@ -134,5 +136,54 @@ describe('Customer tests', () => {
       .set('authorization', `Baerer ${token}`)
       .send();
     expect(response.status).toBe(404);
+  });
+
+  it('should return a list of customers (index)', async () => {
+    const response = await request(app)
+      .get(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('page');
+    expect(response.body).toHaveProperty('perPage');
+    expect(response.body).toHaveProperty('lastPage');
+    expect(response.body).toHaveProperty('total');
+  });
+
+  it('should return page 1 in case of not sended page query', async () => {
+    const response = await request(app)
+      .get(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body.page).toBe(1);
+  });
+
+  it('should return perPage 10 in case of not sended perPage query', async () => {
+    const response = await request(app)
+      .get(`/customers`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body.perPage).toBe(10);
+  });
+
+  it('should be able return differents pages', async () => {
+    const response = await request(app)
+      .get(`/customers?page=2`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(parseInt(response.body.page)).toBe(2);
+  });
+
+  it('should be able return differents perPages', async () => {
+    const response = await request(app)
+      .get(`/customers?perPage=5`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(parseInt(response.body.perPage)).toBe(5);
   });
 });

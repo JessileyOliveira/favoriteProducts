@@ -3,9 +3,24 @@ const { Op } = require('sequelize');
 
 class CustomerController {
   async index(req, res) {
-    const customer = req.customer;
+    const { page = 1, perPage = 10 } = req.query;
+    const customers = await Customer.findAll({
+      order: ['name'],
+      limit: perPage,
+      offest: (page - 1) * perPage,
+    });
 
-    return res.status(200).json(customer);
+    const total = await Customer.count({ col: 'id' });
+
+    const content = {
+      total,
+      perPage,
+      lastPage: Math.round(total / perPage),
+      page,
+      data: customers,
+    };
+
+    return res.status(200).json(content);
   }
 
   async store(req, res) {
@@ -27,6 +42,12 @@ class CustomerController {
         .status(400)
         .json({ error: true, message: 'Error registering customer' });
     }
+  }
+
+  async show(req, res) {
+    const customer = req.customer;
+
+    return res.status(200).json(customer);
   }
 
   async update(req, res) {
