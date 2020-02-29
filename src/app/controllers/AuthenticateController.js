@@ -26,7 +26,7 @@ class AuthenticateController {
     const { id } = customer;
 
     return res.status(200).json({
-      token: jwt.sign({ id, email }, authConfig.secret, {
+      token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
