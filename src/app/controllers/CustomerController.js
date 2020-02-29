@@ -2,21 +2,7 @@ const Customer = require('../models/Customer');
 
 class CustomerController {
   async index(req, res) {
-    const { id } = req.params;
-
-    if (!Number.isInteger(parseInt(id))) {
-      return res
-        .status(400)
-        .json({ error: true, message: 'Sent ID is invalid!' });
-    }
-
-    const customer = await Customer.findByPk(id);
-
-    if (!customer) {
-      return res
-        .status(404)
-        .json({ error: true, message: 'Customer not found!' });
-    }
+    const customer = req.customer;
 
     return res.status(200).json(customer);
   }
@@ -40,6 +26,21 @@ class CustomerController {
         .status(400)
         .json({ error: true, message: 'Error registering customer' });
     }
+  }
+
+  async update(req, res) {
+    const customer = req.customer;
+    const { email } = req.body;
+
+    const checkEmailExist = await Customer.findOne({ where: { email } });
+
+    if (checkEmailExist) {
+      return res.status(400).json({ error: true, message: 'Duplicated email' });
+    }
+
+    const { name } = await customer.update(req.body);
+
+    return res.status(200).json({ name, email });
   }
 }
 
