@@ -20,6 +20,21 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
+      product_title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      product_image: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      product_price: {
+        type: Sequelize.DECIMAL(10, 2),
+        validate: {
+          isDecimal: true,
+        },
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

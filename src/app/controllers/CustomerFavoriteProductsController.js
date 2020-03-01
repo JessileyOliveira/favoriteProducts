@@ -9,10 +9,7 @@ class CustomerFavoriteProductsController {
       where: { customer_id: customer.id, product_id: product.id },
     });
 
-    console.log(checkProductAlreadyExists);
-
     if (checkProductAlreadyExists) {
-      console.log('uigob  y8o');
       return res.status(400).json({
         error: true,
         message: 'The product already exists on the customers favorite list!',
@@ -22,6 +19,9 @@ class CustomerFavoriteProductsController {
     const favoriteProduct = await CustomerFavoriteProducts.create({
       customer_id: customer.id,
       product_id: product.id,
+      product_title: product.title,
+      product_image: product.image,
+      product_price: product.price,
     });
     return res.status(201).json(favoriteProduct);
   }

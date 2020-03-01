@@ -6,6 +6,9 @@ class CustomerFavoriteProducts extends Model {
       {
         customer_id: DataTypes.INTEGER,
         product_id: DataTypes.UUID,
+        product_title: DataTypes.STRING,
+        product_image: DataTypes.STRING,
+        product_price: DataTypes.DECIMAL(10, 2),
       },
       {
         sequelize,

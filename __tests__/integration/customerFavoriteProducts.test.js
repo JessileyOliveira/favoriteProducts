@@ -68,9 +68,14 @@ describe('Favorite products tests', () => {
   it('should return error when product id already exists customers favorite list (store)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);
+    const productList = await getListProduct(1);
+    const product = productList.data.products[0];
     await CustomerFavoriteProducts.create({
       customer_id: customer.id,
-      product_id: productId,
+      product_id: product.id,
+      product_title: product.title,
+      product_image: product.image,
+      product_price: product.price,
     });
 
     const response = await request(app)
