@@ -1,3 +1,5 @@
+require('dotenv/config');
+
 const app = require('./app');
 
-app.listen(3333);
+app.listen(process.env.SERVER_POST || 3333);
