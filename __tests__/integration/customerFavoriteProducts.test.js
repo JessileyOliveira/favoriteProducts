@@ -27,6 +27,11 @@ describe('Favorite products tests', () => {
 
     productId = productList.data.products[0].id;
   });
+
+  afterEach(async () => {
+    await CustomerFavoriteProducts.destroy({ truncate: true });
+  });
+
   it('should be able add a favorite product (store)', async () => {
     const fakeCustomer = generateFakeCustomer();
     const customer = await Customer.create(fakeCustomer);

@@ -21,6 +21,10 @@ describe('Customer tests', () => {
     );
   });
 
+  afterEach(async () => {
+    await Customer.destroy({ truncate: { cascade: true } });
+  });
+
   it('should add a new customer and return status 201 (store)', async () => {
     const response = await request(app)
       .post('/customers')
