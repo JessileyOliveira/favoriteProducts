@@ -1,6 +1,8 @@
 require('dotenv/config');
 const express = require('express');
 const routes = require('./routes');
+const helmet = require('helmet');
+const cors = require('cors');
 require('./database');
 class App {
   constructor() {
@@ -12,6 +14,8 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(helmet());
+    this.server.use(cors());
   }
 
   routes() {

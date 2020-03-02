@@ -29,7 +29,7 @@ describe('Favorite products tests', () => {
   });
 
   afterEach(async () => {
-    await CustomerFavoriteProducts.destroy({ truncate: true });
+    await Customer.destroy({ truncate: { cascade: true } });
   });
 
   it('should be able add a favorite product (store)', async () => {
