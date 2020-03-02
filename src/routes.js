@@ -24,13 +24,17 @@ routes.delete(
   CustomerController.destroy
 );
 
+routes.get(
+  '/customers/:customer_id/favoriteproduct',
+  getCustomer,
+  CustomerFavoriteProductsController.show
+);
 routes.post(
   '/customers/:customer_id/favoriteproduct/:product_id',
   getCustomer,
   getProduct,
   CustomerFavoriteProductsController.store
 );
-
 routes.delete(
   '/customers/:customer_id/favoriteproduct/:product_id',
   getCustomer,

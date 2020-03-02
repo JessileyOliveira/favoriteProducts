@@ -36,6 +36,32 @@ class CustomerFavoriteProductsController {
 
     return res.status(200).send();
   }
+
+  async show(req, res) {
+    const customer = req.customer;
+    const { page = 1, perPage = 10 } = req.query;
+    const favoriteProducts = await CustomerFavoriteProducts.findAll({
+      where: { customer_id: customer.id },
+      order: ['product_title'],
+      limit: perPage,
+      offest: (page - 1) * perPage,
+    });
+
+    const total = await CustomerFavoriteProducts.count({
+      where: { customer_id: customer.id },
+      col: 'id',
+    });
+
+    const content = {
+      total,
+      perPage,
+      lastPage: Math.round(total / perPage),
+      page,
+      data: favoriteProducts,
+    };
+
+    return res.status(200).json(content);
+  }
 }
 
 module.exports = new CustomerFavoriteProductsController();

@@ -127,4 +127,72 @@ describe('Favorite products tests', () => {
     expect(response.body).toHaveProperty('message');
     expect(response.body.message).toBe('Customer not found!');
   });
+
+  it('should return a list of favorite products (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).toHaveProperty('page');
+    expect(response.body).toHaveProperty('perPage');
+    expect(response.body).toHaveProperty('lastPage');
+    expect(response.body).toHaveProperty('total');
+  });
+  it('should return page 1 in case of not sended page query (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body.page).toBe(1);
+  });
+  it('should return perPage 10 in case of not sended perPage query (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(response.body.perPage).toBe(10);
+  });
+  it('should be able return differents pages (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct?page=2`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(parseInt(response.body.page)).toBe(2);
+  });
+  it('should be able return differents perPages (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct?perPage=5`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+    expect(response.status).toBe(200);
+    expect(parseInt(response.body.perPage)).toBe(5);
+  });
+  it('should return error when customer id invalid (show)', async () => {
+    const fakeCustomer = generateFakeCustomer();
+    const customer = await Customer.create(fakeCustomer);
+    await customer.destroy();
+    const response = await request(app)
+      .get(`/customers/${customer.id}/favoriteproduct`)
+      .set('authorization', `Baerer ${token}`)
+      .send();
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body.message).toBe('Customer not found!');
+  });
 });
