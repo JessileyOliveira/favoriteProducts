@@ -4,19 +4,20 @@ const { Op } = require('sequelize');
 class CustomerController {
   async index(req, res) {
     const { page = 1, perPage = 10 } = req.query;
+
     const customers = await Customer.findAll({
       order: ['name'],
       limit: perPage,
-      offest: (page - 1) * perPage,
+      offset: (page - 1) * perPage,
     });
 
     const total = await Customer.count({ col: 'id' });
 
     const content = {
       total,
-      perPage,
-      lastPage: Math.round(total / perPage),
-      page,
+      perPage: parseInt(perPage),
+      lastPage: Math.ceil(total / perPage),
+      page: parseInt(page),
       data: customers,
     };
 

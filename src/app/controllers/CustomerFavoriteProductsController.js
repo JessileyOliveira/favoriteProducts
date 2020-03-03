@@ -44,7 +44,7 @@ class CustomerFavoriteProductsController {
       where: { customer_id: customer.id },
       order: ['product_title'],
       limit: perPage,
-      offest: (page - 1) * perPage,
+      offset: (page - 1) * perPage,
     });
 
     const total = await CustomerFavoriteProducts.count({
@@ -54,9 +54,9 @@ class CustomerFavoriteProductsController {
 
     const content = {
       total,
-      perPage,
-      lastPage: Math.round(total / perPage),
-      page,
+      perPage: parseInt(perPage),
+      lastPage: Math.ceil(total / perPage),
+      page: parseInt(page),
       data: favoriteProducts,
     };
 

@@ -9,8 +9,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "pretest": "sequelize db:migrate",
-    "test": "jest",
-    "posttest": "sequelize db:migrate:undo:all"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.19.2",
