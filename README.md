@@ -52,7 +52,7 @@ _Isso iniciará o servidor com base nos dados informados no arquivo .env, caso t
 
 ## Testes
 
-_Os testes estão localizados na pasta `__tests__`_
+_Os testes estão localizados na pasta `__tests__`._
 
 Use o comando abaixo para executar os testes:
 
@@ -67,6 +67,7 @@ yarn test
 ```
 
 _OBS:. A execução dos testes executa o script ```sequelize db:migrate```, criando as tabelas do sistema_
+
 _OBS2:. A execução dos testes efetua a limpeza das tabelas ao final dos testes_
 
 ## Endpoints
