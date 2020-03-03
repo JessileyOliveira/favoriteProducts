@@ -76,7 +76,7 @@ _OBS2:. A execução dos testes efetua a limpeza das tabelas ao final dos testes
 
 #### `POST`: `/authenticate`
 
-Autentica o usuário e fonece um token jwt (este token será obrigatório em todos os próximos endpoints):
+Autentica o usuário e fornece um token jwt (este token será obrigatório em todos os próximos endpoints):
 
 ```json
 {
@@ -92,7 +92,7 @@ _O token deve ser enviado no header `Authorization` dos endpoints abaixo acompan
 
 #### `GET`: `/customers?page=<NUMERO_DA_PAGINA>&perPage=<QUANTIDADE_POR_PAGINA>`
 
-_OBS:. O parametro `page` e o parametro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
+_OBS:. O parametro `page` e o parâmetro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
 
 `Ação:` Retorna uma lista de Clientes
 #
@@ -118,7 +118,7 @@ _OBS:. O parametro `page` e o parametro `perPage` são opcionais. Caso os mesmos
 
 ```json
 {
-  "name": "Jessilwy Willian",
+  "name": "Jessiley Willian",
   "email": "jessiley@otherExample.com"
 }
 ```
@@ -142,9 +142,9 @@ OBS:. Os produtos não são gerenciados por este sistema, para ver a documentaç
 
 #### `GET`: `/customers/<ID_CLIENTE>/favoriteproduct?page=<NUMERO_DA_PAGINA>&perPage=<QUANTIDADE_POR_PAGINA>`
 
-_OBS:. O parametro `page` e o parametro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
+_OBS:. O parâmetro `page` e o parametro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
 
-`Ação:` Obtem a lista de produtos favoritos de um cliente
+`Ação:` Obtém a lista de produtos favoritos de um cliente
 #
 
 #### `DELETE`: `/customers/<ID_CLIENTE>/favoriteproduct/<ID_PRODUTO>`
