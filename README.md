@@ -22,7 +22,7 @@ Você deverá ter em sua máquina os seguinte itens:
    yarn
    ```
    
-3. Tenha o [Postgres](https://www.postgresql.org/) rodando em sua máquina com um database com nome "favoriteproducts" — ou execute o [Docker Compose](https://docs.docker.com/compose/) (neste caso o database já será criado automaticamente):
+3. Tenha o [Postgres](https://www.postgresql.org/) rodando em sua máquina com um database com nome "favoriteproducts" — ou execute o [Docker Compose](https://docs.docker.com/compose/) (neste caso o database será criado automaticamente):
 
    ```sh
    docker-compose up
@@ -36,19 +36,29 @@ Você deverá ter em sua máquina os seguinte itens:
  
  ## Execução
 
-Para execução da aplicação em modo de desenvolvimento execute:
+Para início da aplicação, execute:
 
-```sh
+#### `Desenvolvimento (com [nodemon](https://nodemon.io/)):`
+```sh 
 npm run dev
-```
+```   
 
-   ou se você usa yarn:
-
-```sh
+ou se você usa yarn:
+```sh 
 yarn dev
 ```
 
-_Isso iniciará o servidor com base nos dados informados no arquivo .env, caso tenha seguido o exemplo `localhost:8080`_
+#### `Produção:`
+```sh
+npm run start
+``` 
+
+ou se você usa yarn:
+```sh
+yarn start
+```
+
+_Isso iniciará o servidor com base nos dados informados no arquivo .env, caso tenha seguido o exemplo iniciará em `localhost:3333`_
 
 ## Testes
 
@@ -66,7 +76,7 @@ npm test
 yarn test
 ```
 
-_OBS:. A execução dos testes executa o script ```sequelize db:migrate```, criando as tabelas do sistema_
+_OBS:. A execução dos testes executa o script ```sequelize db:migrate```, criando as tabelas no database_
 
 _OBS2:. A execução dos testes efetua a limpeza das tabelas ao final dos testes_
 
