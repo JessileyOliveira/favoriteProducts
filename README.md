@@ -38,7 +38,7 @@ Você deverá ter em sua máquina os seguinte itens:
 
 Para início da aplicação, execute:
 
-#### `Desenvolvimento (com [nodemon](https://nodemon.io/)):`
+#### `Desenvolvimento `(com [nodemon](https://nodemon.io/)):
 ```sh 
 npm run dev
 ```   
@@ -58,7 +58,7 @@ ou se você usa yarn:
 yarn start
 ```
 
-_Isso iniciará o servidor com base nos dados informados no arquivo .env, caso tenha seguido o exemplo iniciará em `localhost:3333`_
+_Isso iniciará o servidor com base nos dados informados no arquivo `.env`, caso tenha seguido o exemplo iniciará em `localhost:3333`_
 
 ## Testes
 
@@ -102,7 +102,7 @@ _O token deve ser enviado no header `Authorization` dos endpoints abaixo acompan
 
 #### `GET`: `/customers?page=<NUMERO_DA_PAGINA>&perPage=<QUANTIDADE_POR_PAGINA>`
 
-_OBS:. O parametro `page` e o parâmetro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
+_OBS:. O parâmetro `page` e o parâmetro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
 
 `Ação:` Retorna uma lista de Clientes
 #
@@ -152,7 +152,7 @@ OBS:. Os produtos não são gerenciados por este sistema, para ver a documentaç
 
 #### `GET`: `/customers/<ID_CLIENTE>/favoriteproduct?page=<NUMERO_DA_PAGINA>&perPage=<QUANTIDADE_POR_PAGINA>`
 
-_OBS:. O parâmetro `page` e o parametro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
+_OBS:. O parâmetro `page` e o parâmetro `perPage` são opcionais. Caso os mesmos não sejam fornecidos, serão utilizados os valores 1 e 10 respectivamente`_
 
 `Ação:` Obtém a lista de produtos favoritos de um cliente
 #
