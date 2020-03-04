@@ -22,7 +22,7 @@ Você deverá ter em sua máquina os seguinte itens:
    yarn
    ```
    
-3. Tenha o [Postgres](https://www.postgresql.org/) rodando em sua máquina com um database com nome "favoriteproducts" — ou execute o [Docker Compose](https://docs.docker.com/compose/) (neste caso o database será criado automaticamente):
+3. Tenha o [Postgres](https://www.postgresql.org/) rodando em sua máquina com um database com nome `favoriteproducts` — ou execute o [Docker Compose](https://docs.docker.com/compose/) (neste caso o database será criado automaticamente):
 
    ```sh
    docker-compose up
