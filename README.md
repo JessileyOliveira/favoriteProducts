@@ -28,7 +28,7 @@ Você deverá ter em sua máquina os seguinte itens:
    docker-compose up
    ```
 
-   _Será executado o Postgres em sua máquina virtual docker na porta `5432`, isso pode alterado no arquivo `docker-compose.yml`._
+   _Será executado o Postgres em sua máquina virtual docker na porta `5432`, isso pode ser alterado no arquivo `docker-compose.yml`._
    
  4. Crie um arquivo `.env` no diretório raiz, utilize o arquivo `.env-example` como padrão.
  
